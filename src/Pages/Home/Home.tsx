@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 import './Home.css';
 import Note from '../../Components/Note/Note';
 import { INote } from '../../ts/interfaces';
-
 import notes from '../../data/data.json';
+import Header from '../../Components/Header/Header';
 
 const Home = () => {
   const [note, setNote] = useState<INote[]>();
-  
+
   useEffect(() => {
     setNote(notes);
   }, []);
 
   return (
     <>
-      <div className="header__navigation"></div>
+      <Header/>
       <div className="date__picker"></div>
       <div className="main__content">
         <div className="notes__list">

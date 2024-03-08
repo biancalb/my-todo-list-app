@@ -3,7 +3,11 @@ import './Note.css';
 import { INote } from '../../ts/interfaces';
 import moment from 'moment';
 
-const Note = (props: { note: INote }) => {
+type Props = {
+  note: INote
+}
+
+const Note = (props: Props) => {
   const note = props?.note;
   const parts = note.date.split('-').map(p => parseInt(p));
   const objDate = new Date(parts[0], parts[1] - 1, parts[2]);
@@ -16,7 +20,6 @@ const Note = (props: { note: INote }) => {
     const updatedCheckedState = isChecked.map((item, index) =>
       index === position ? !item : item
     );
-    console.log(updatedCheckedState);
     setIsChecked(updatedCheckedState);
   };
 
