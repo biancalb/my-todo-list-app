@@ -1,0 +1,68 @@
+/* HEADER */
+.header__navigation {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+/* MAIN */
+.main__content {
+    max-width: 85vw;
+    height: 75vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    position: relative;
+    overflow-y: auto;
+    border-bottom: 2px solid #fcdccc
+}
+
+.date__picker {
+    max-width: 85vw;
+    height: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 90px;
+    border-bottom: 2px solid #fcdccc
+}
+
+.main__content::-webkit-scrollbar {
+    width: 1px;
+}
+
+.main__content::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+/* FOOTER */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.addNew__button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0px 35px 35px 0px;
+}
+
+.addNew__button button {
+    border-radius: 50%;
+    padding: 15px 20px ;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+}
