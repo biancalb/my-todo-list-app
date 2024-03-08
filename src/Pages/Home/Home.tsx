@@ -1,17 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Home.css'
 import Note from '../../Components/Note/Note'
+import { INote } from '../../ts/interfaces';
 
 interface Props {}
 
+const notes = require('../../data/data.json');
+
 const Home = (props: Props) => {
+  const [note, setNote] = useState<INote[]>()
+  
+  useEffect(() => {
+    setNote(notes)
+  }, [])
+
   return (
     <>
       <div className="header__navigation"></div>
       <div className="date__picker"></div>
       <div className="main__content">
         <div className="notes__list">
-          <Note/>
+          {note?.map((n:INote) =>{
+            return (
+              <Note key={n.id} note={n}/>
+            )
+          })}
         </div>
         <div className="addNew__button">
             <a href="">
