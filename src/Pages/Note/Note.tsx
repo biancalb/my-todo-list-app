@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-interface Props {}
-
-const Note = (props: Props) => {
+const Note = () => {
   return (
     <div>Note</div>
-  )
-}
+  );
+};
 
-export default Note
+export default Note;

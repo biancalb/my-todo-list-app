@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import './Note.css'
-import { INote } from '../../ts/interfaces'
+import React, { useState } from 'react';
+import './Note.css';
+import { INote } from '../../ts/interfaces';
 import moment from 'moment';
 
 const Note = (props: { note: INote }) => {
   const note = props?.note;
-  var parts = note.date.split('-').map(p => parseInt(p));
+  const parts = note.date.split('-').map(p => parseInt(p));
   const objDate = new Date(parts[0], parts[1] - 1, parts[2]);
 
   const [isChecked, setIsChecked] =  useState(
@@ -16,7 +16,7 @@ const Note = (props: { note: INote }) => {
     const updatedCheckedState = isChecked.map((item, index) =>
       index === position ? !item : item
     );
-    console.log(updatedCheckedState)
+    console.log(updatedCheckedState);
     setIsChecked(updatedCheckedState);
   };
 
@@ -24,30 +24,30 @@ const Note = (props: { note: INote }) => {
     <>
       <div className={`cards card${note.id}`}>
         <div className="card-header">
-            <span className="weekday">{moment(objDate).format("dddd")}, </span>
-            <span className="date">{moment(objDate).format("MMMM, Do")}</span>
+          <span className="weekday">{moment(objDate).format('dddd')}, </span>
+          <span className="date">{moment(objDate).format('MMMM, Do')}</span>
         </div>
         <div className="todo-items">
-            <ul>
-              {note.tasks?.map((task, index) => {
-                return (
-                  <li key={task.id}>
-                      <input type="checkbox" checked={isChecked[index]} onChange={() => handleOnChange(index)}/>
-                      <span className="task-description">{task.title}</span>
-                  </li>
-                )
-              })}
-            </ul>
+          <ul>
+            {note.tasks?.map((task, index) => {
+              return (
+                <li key={task.id}>
+                  <input type="checkbox" checked={isChecked[index]} onChange={() => handleOnChange(index)}/>
+                  <span className="task-description">{task.title}</span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
         <div className="card-footer">
-            <div className="count-tasks">{note.tasks.length ?? 0} tasks</div>
-            <div className="add-task">
-                <button> Add new + </button>
-            </div>
+          <div className="count-tasks">{note.tasks.length ?? 0} tasks</div>
+          <div className="add-task">
+            <button> Add new + </button>
+          </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Note
+export default Note;

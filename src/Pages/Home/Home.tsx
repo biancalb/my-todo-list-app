@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import './Home.css'
-import Note from '../../Components/Note/Note'
+import { useEffect, useState } from 'react';
+import './Home.css';
+import Note from '../../Components/Note/Note';
 import { INote } from '../../ts/interfaces';
 
-interface Props {}
+import notes from '../../data/data.json';
 
-const notes = require('../../data/data.json');
-
-const Home = (props: Props) => {
-  const [note, setNote] = useState<INote[]>()
+const Home = () => {
+  const [note, setNote] = useState<INote[]>();
   
   useEffect(() => {
-    setNote(notes)
-  }, [])
+    setNote(notes);
+  }, []);
 
   return (
     <>
@@ -23,18 +21,18 @@ const Home = (props: Props) => {
           {note?.map((n:INote) =>{
             return (
               <Note key={n.id} note={n}/>
-            )
+            );
           })}
         </div>
         <div className="addNew__button">
-            <a href="">
-                <button>+</button>
-            </a>
+          <a href="">
+            <button>+</button>
+          </a>
         </div>
       </div>
       <footer></footer>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
