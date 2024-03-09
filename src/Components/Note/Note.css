@@ -14,6 +14,7 @@
 .cards {
     position: relative;
     height: 400px;
+    min-width: 300px;
     max-width: 300px;
     background-color: #f8f8f8;
     flex-shrink: 0;
@@ -46,11 +47,11 @@
 
 .todo-items ul {
     list-style-type: none;
-    padding-left: 30px;
+    padding-left: 20px;
 }
 
 .todo-items ul li {
-    margin-bottom: 20px;
+    margin-top: 10px;
     font-size: 12px;
 }
 

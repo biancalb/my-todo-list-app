@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  background-color: #FCC4A2;
+  background-color: #FCC4A2 !important;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
 }
-
