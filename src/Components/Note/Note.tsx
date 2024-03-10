@@ -87,7 +87,11 @@ const Note = (props: Props) => {
           }
         </div>
         <div className="card-footer">
-          <div className="count-tasks">{note.tasks.length ?? 0} tasks</div>
+          <div className="count-tasks">
+            <span data-descr={`Progress: ${note.tasks?.filter(t => t.completed).length}/${note.tasks?.length}`}>
+              {note.tasks.length ?? 0} tasks
+            </span>
+          </div>
           <div className="add-task">
             <button onClick={() => onAddNew()}> Add new + </button>
           </div>

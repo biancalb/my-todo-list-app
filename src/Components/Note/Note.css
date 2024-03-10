@@ -135,3 +135,18 @@
 .new__task input[type=text]:focus {
     border: none;
 }
+
+.card-footer .count-tasks span[data-descr]:hover::after {
+    content: attr(data-descr);
+    position: absolute;
+    left: 70px;
+    top: 15px;
+    min-width: 100px;
+    border-radius: 5px;
+    background-color: #cebcbc4d;
+    padding: 5px;
+    color: #838282;
+    font-size: 12px;
+    z-index: 1;
+    text-align: center;
+  }
