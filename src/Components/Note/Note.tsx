@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Note.css';
 import { INote } from '../../ts/interfaces';
 import moment from 'moment';
-import { FaCheck, FaRegWindowClose } from 'react-icons/fa';
+import { FaCheck, FaPen, FaRegWindowClose, FaTrash } from 'react-icons/fa';
 
 type Props = {
   note: INote
@@ -23,6 +23,11 @@ const Note = (props: Props) => {
     );
     setIsChecked(updatedCheckedState);
   };
+
+  useEffect(() => {
+    setIsChecked(isChecked);
+  }, [isChecked]);
+
   const [newTask, setNewTask] =  useState(false);
   const [newTaskDescription, setNewTaskDescription] =  useState('');
   
@@ -56,8 +61,14 @@ const Note = (props: Props) => {
             {note.tasks?.map((task, index) => {
               return (
                 <li key={task.id}>
-                  <input type="checkbox" checked={isChecked[index]} onChange={() => handleOnChange(index)}/>
-                  <span className="task-description">{task.title}</span>
+                  <div className={`task ${!isChecked[index] ? 'editable' :''}`}>
+                    <input type="checkbox" checked={isChecked[index]} onChange={() => handleOnChange(index)}/>
+                    <span className="task-description">{task.title}</span>
+                  </div>
+                  {!isChecked[index] && <div className='task__btn'>
+                    <span><FaPen/></span>
+                    <span><FaTrash/></span>
+                  </div>}
                 </li>
               );
             })}

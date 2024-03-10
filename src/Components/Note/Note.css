@@ -14,8 +14,8 @@
 .cards {
     position: relative;
     height: 400px;
-    min-width: 300px;
-    max-width: 300px;
+    min-width: 320px;
+    max-width: 320px;
     background-color: #f8f8f8;
     flex-shrink: 0;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -30,7 +30,7 @@
     width: 100%;
     margin-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(206, 188, 188, 0.3)
+    border-bottom: 1px solid #cebcbc4d
 }
 
 .card-header .weekday {
@@ -48,16 +48,36 @@
     position: relative;
     height: 68%;
 }
+
 .todo-items ul {
     list-style-type: none;
     padding-left: 20px;
     overflow-y: auto;
-    max-height: 220px;
+    max-height: 230px;
 }
 
 .todo-items ul li {
     margin-top: 10px;
     font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.todo-items ul li .task {
+    max-width: 85%;
+}
+.todo-items ul li .task.editable {
+    max-width: 80%;
+}
+
+.todo-items ul li .task__btn  {
+    transform: translate(-20px);
+    margin: 0 2px 0 2px;
+    color: #5f50504d;
+}
+.todo-items ul li .task__btn span {
+    margin: 0 2px 0 2px;
+    color: #5f50504d;
 }
 
 .todo-items input:checked+span {
@@ -95,15 +115,16 @@
     font-size: 12px;
     cursor: pointer;
 }
-.new__task{
+.new__task {
     width: 90%;
     margin-left: 20px;
     font-size: 14px;
     position: absolute;
     bottom: 10px;    
 }
+
 .new__task .icon{
-    margin: 5px;
+    margin-left: 10px;
 }
 .new__task input[type=text] {
     width: 80%;
