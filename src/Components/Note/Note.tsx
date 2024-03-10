@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import './Note.css';
 import { INote } from '../../ts/interfaces';
 import moment from 'moment';
+import { FaCheck, FaRegWindowClose } from 'react-icons/fa';
 
 type Props = {
   note: INote
@@ -15,12 +17,31 @@ const Note = (props: Props) => {
   const [isChecked, setIsChecked] =  useState(
     note.tasks.map(a => a.completed)
   );
-
-  const handleOnChange = (position:number) => {
+  const handleOnChange = (position: number) => {
     const updatedCheckedState = isChecked.map((item, index) =>
       index === position ? !item : item
     );
     setIsChecked(updatedCheckedState);
+  };
+  const [newTask, setNewTask] =  useState(false);
+  const [newTaskDescription, setNewTaskDescription] =  useState('');
+  
+  const onAddNew = () => {
+    setNewTask(true);
+  };
+  const handleNewTaskSave = () => {
+    if (newTaskDescription) {
+      note.tasks.push({
+        'id': note.tasks.length + 1,
+        'title': newTaskDescription,
+        'completed': false
+      });
+      handleNewTaskClose();
+    }
+  };
+  const handleNewTaskClose = () => {
+    setNewTask(false);
+    setNewTaskDescription('');
   };
 
   return (
@@ -41,11 +62,23 @@ const Note = (props: Props) => {
               );
             })}
           </ul>
+          {newTask && 
+            <div className='new__task'>
+              <input 
+                type='text' 
+                placeholder="Type here" 
+                value={newTaskDescription} 
+                onChange={e => setNewTaskDescription(e.target.value)}>
+              </input>
+              <span className='icon'><FaCheck onClick={handleNewTaskSave} /></span>
+              <span className='icon'><FaRegWindowClose onClick={handleNewTaskClose} /></span>
+            </div>
+          }
         </div>
         <div className="card-footer">
           <div className="count-tasks">{note.tasks.length ?? 0} tasks</div>
           <div className="add-task">
-            <button> Add new + </button>
+            <button onClick={() => onAddNew()}> Add new + </button>
           </div>
         </div>
       </div>
