@@ -4,49 +4,102 @@ import './Note.css';
 import { INote } from '../../ts/interfaces';
 import moment from 'moment';
 import { FaCheck, FaPen, FaRegWindowClose, FaTrash } from 'react-icons/fa';
+import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
+import { EActionNames } from '../../ts/enums';
 
 type Props = {
   note: INote
 }
 
 const Note = (props: Props) => {
-  const note = props?.note;
-  const parts = note.date.split('-').map(p => parseInt(p));
-  const objDate = new Date(parts[0], parts[1] - 1, parts[2]);
-
+  const [note, setNote] =  useState(props?.note);
+  const [tasks, setTasks] =  useState(note.tasks);
+  const [newTask, setNewTask] =  useState(false);
+  const [newTaskDescription, setNewTaskDescription] =  useState('');
   const [isChecked, setIsChecked] =  useState(
     note.tasks.map(a => a.completed)
   );
-  const handleOnChange = (position: number) => {
+  const [showDialog, setShowDialog] =  useState(false);
+  const [action, setAction] =  useState<EActionNames | null>(null);
+  const [taskId, setTaskId] =  useState<number | null>(null);
+  
+  const parts = note.date.split('-').map(p => parseInt(p));
+  const objDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+  useEffect(() => {
+  }, [isChecked, tasks]);
+
+  const handleOnChecked = (position: number) => {
     const updatedCheckedState = isChecked.map((item, index) =>
       index === position ? !item : item
     );
     setIsChecked(updatedCheckedState);
   };
 
-  useEffect(() => {
-    setIsChecked(isChecked);
-  }, [isChecked]);
-
-  const [newTask, setNewTask] =  useState(false);
-  const [newTaskDescription, setNewTaskDescription] =  useState('');
-  
   const onAddNew = () => {
     setNewTask(true);
   };
+
   const handleNewTaskSave = () => {
     if (newTaskDescription) {
-      note.tasks.push({
-        'id': note.tasks.length + 1,
+      tasks.push({
+        'id': tasks.length + 1,
         'title': newTaskDescription,
         'completed': false
       });
       handleNewTaskClose();
     }
   };
+  
   const handleNewTaskClose = () => {
     setNewTask(false);
     setNewTaskDescription('');
+  };
+
+  const handleOnDeleteTask = (id: number) => {
+    setAction(EActionNames.Delete);
+    setShowDialog(true);
+    setTaskId(id);
+  };
+
+  const handleOnEditTask = (id: number) => {
+    //to do
+  };
+    
+  const onShowDialog = (isShown: boolean) => isShown;
+  
+  const handleCloseDialog = (isClosed: boolean = false) => {
+    setShowDialog(isClosed);
+    setAction(null);
+  };
+  
+  const deleteTask = () => {
+    if (taskId) {
+      setTasks(tasks.filter(t => t.id != taskId));
+      handleCloseDialog();
+      //to do: sucess message
+    }
+  };
+
+  const handleClick = (dialogAction: EActionNames | null, buttonAction: string | undefined) => {
+    if (buttonAction == EActionNames.Cancel){
+      handleCloseDialog();
+    } 
+    else 
+    {
+      switch (dialogAction) {
+      case EActionNames.Delete:
+        deleteTask();
+        break;
+    
+      case EActionNames.Edit:
+        console.log('edit');
+        break;
+        
+      default:
+        break;
+      }
+    }
   };
 
   return (
@@ -58,16 +111,16 @@ const Note = (props: Props) => {
         </div>
         <div className="todo-items">
           <ul>
-            {note.tasks?.map((task, index) => {
+            {tasks.map((task, index) => {
               return (
                 <li key={task.id}>
                   <div className={`task ${!isChecked[index] ? 'editable' :''}`}>
-                    <input type="checkbox" checked={isChecked[index]} onChange={() => handleOnChange(index)}/>
+                    <input type="checkbox" checked={isChecked[index]} onChange={() => handleOnChecked(index)}/>
                     <span className="task-description">{task.title}</span>
                   </div>
                   {!isChecked[index] && <div className='task__btn'>
-                    <span><FaPen/></span>
-                    <span><FaTrash/></span>
+                    <span><FaPen onClick={() => handleOnEditTask(task.id)}/></span>
+                    <span><FaTrash onClick={() => handleOnDeleteTask(task.id)}/></span>
                   </div>}
                 </li>
               );
@@ -93,10 +146,17 @@ const Note = (props: Props) => {
             </span>
           </div>
           <div className="add-task">
-            <button onClick={() => onAddNew()}> Add new + </button>
+            <button onClick={onAddNew}> Add new + </button>
           </div>
         </div>
       </div>
+      <ConfirmationDialog 
+        action={action}
+        stage='task' 
+        show={() => onShowDialog(showDialog)}
+        handleClose={handleCloseDialog}
+        handleClick={handleClick}
+      />
     </>
   );
 };
