@@ -10,7 +10,7 @@ type Props = {
   value: DateRange | null
 }
 
-const DateSelector = (props: Props) => {
+const DateSelector = ({ handleOnChange, value }: Props) => {
   return (
     <div className="date__picker">
       <DateRangePicker
@@ -18,8 +18,8 @@ const DateSelector = (props: Props) => {
         format="dd/MM/yyyy" 
         character=" a " 
         caretAs={FaCalendar}
-        value={props.value} 
-        onChange={(value) => props.handleOnChange(value) }
+        value={value} 
+        onChange={(value) => handleOnChange(value) }
       />
     </div>
   );

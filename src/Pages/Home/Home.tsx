@@ -23,7 +23,7 @@ const Home = () => {
     new Date(),
     new Date(new Date().setDate(new Date().getDate() + 7))
   ]); 
-  const handleOnChange = (value:DateRange | null) => {
+  const handleOnChange = (value: DateRange | null) => {
     setValue(value);
   };
 
@@ -37,7 +37,7 @@ const Home = () => {
   
   // NEW NOTE
   const [newNoteDate, setNewNoteDate] = useState<Date | null>();
-  const handleNewNoteDateOnChange = (value:Date | null) => {
+  const handleNewNoteDateOnChange = (value: Date | null) => {
     setNewNoteDate(value);
   };
 
@@ -58,7 +58,7 @@ const Home = () => {
       <DateSelector value={value} handleOnChange={handleOnChange}/>
       <div className="main__content">
         <div className="notes__list">
-          {note?.map((n:INote) =>{
+          {note?.map((n: INote) =>{
             return (
               <Note key={n.id} note={n}/>
             );

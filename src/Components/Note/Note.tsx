@@ -37,16 +37,26 @@ const Note = (props: Props) => {
   };
 
   const onAddNew = () => {
+    setTaskId(null);
     setNewTask(true);
   };
 
   const handleNewTaskSave = () => {
     if (newTaskDescription) {
-      tasks.push({
-        'id': tasks.length + 1,
-        'title': newTaskDescription,
-        'completed': false
-      });
+
+      if (taskId) {
+        const index = tasks.findIndex(t => t.id == taskId);
+        tasks[index].title = newTaskDescription;
+        //to do: sucess message
+      }
+      else {
+        tasks.push({
+          'id': tasks.length + 1,
+          'title': newTaskDescription,
+          'completed': false
+        });
+        //to do: sucess message
+      }
       handleNewTaskClose();
     }
   };
@@ -63,7 +73,10 @@ const Note = (props: Props) => {
   };
 
   const handleOnEditTask = (id: number) => {
-    //to do
+    setAction(EActionNames.Edit);
+    setTaskId(id);
+    setNewTaskDescription(tasks.find(t => t.id == id)?.title ?? '');
+    setNewTask(true);
   };
     
   const onShowDialog = (isShown: boolean) => isShown;
@@ -91,11 +104,7 @@ const Note = (props: Props) => {
       case EActionNames.Delete:
         deleteTask();
         break;
-    
-      case EActionNames.Edit:
-        console.log('edit');
-        break;
-        
+          
       default:
         break;
       }
