@@ -6,6 +6,7 @@ import moment from 'moment';
 import { FaCheck, FaPen, FaRegWindowClose, FaTrash } from 'react-icons/fa';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import { EActionNames } from '../../ts/enums';
+import { ToastContainer, toast } from 'react-toastify';
 
 type Props = {
   note: INote
@@ -47,7 +48,7 @@ const Note = (props: Props) => {
       if (taskId) {
         const index = tasks.findIndex(t => t.id == taskId);
         tasks[index].title = newTaskDescription;
-        //to do: sucess message
+        toast.success('Task description saved');
       }
       else {
         tasks.push({
@@ -55,7 +56,7 @@ const Note = (props: Props) => {
           'title': newTaskDescription,
           'completed': false
         });
-        //to do: sucess message
+        toast.success('New task saved successfully');
       }
       handleNewTaskClose();
     }
@@ -90,7 +91,7 @@ const Note = (props: Props) => {
     if (taskId) {
       setTasks(tasks.filter(t => t.id != taskId));
       handleCloseDialog();
-      //to do: sucess message
+      toast.success('Task deleted successfully');
     }
   };
 
@@ -165,6 +166,11 @@ const Note = (props: Props) => {
         show={() => onShowDialog(showDialog)}
         handleClose={handleCloseDialog}
         handleClick={handleClick}
+      />
+      <ToastContainer 
+        autoClose={3000}
+        limit={3}
+        closeOnClick
       />
     </>
   );

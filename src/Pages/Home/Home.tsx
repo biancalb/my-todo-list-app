@@ -10,6 +10,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { DatePicker } from 'rsuite';
 import moment from 'moment';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Home = () => {
   // NOTES
@@ -49,6 +50,7 @@ const Home = () => {
         'tasks': [] 
       });
       setShow(false);
+      toast.success('New note created');
     }
   };
 
@@ -94,6 +96,11 @@ const Home = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer 
+        autoClose={3000}
+        limit={3}
+        closeOnClick
+      />
     </>
   );
 };
